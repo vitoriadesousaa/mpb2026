@@ -1,0 +1,938 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPB – Música Popular Brasileira</title>
+
+<style>
+/* =========================
+   CORES DO SITE
+========================= */
+
+:root {
+    --bege: #F0DFCA;
+    --bege-claro: #F8EDDF;
+    --caramelo: #C6A47E;
+    --marrom: #604632;
+    --marrom-escuro: #38271C;
+    --dourado: #D5AD75;
+    --texto: #49382C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Georgia", serif;
+    background: var(--bege);
+    color: var(--texto);
+    overflow-x: hidden;
+}
+
+/* =========================
+   FUNDO DECORATIVO
+========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: #C6A47E;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    top: 20%;
+    left: -150px;
+    z-index: -1;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: #A77D58;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.12;
+    bottom: 5%;
+    right: -150px;
+    z-index: -1;
+}
+
+/* =========================
+   CAPA PRINCIPAL
+========================= */
+
+.hero {
+    background-image: url('https://s2-g1.glbimg.com/hRouMmcG-zWOdJoz0BQelDMRqHs=/0x0:997x631/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/N/N/WkjS7HQjWrVYSXfmmGiw/phono73capa1.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 440px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(30, 19, 12, 0.65),
+        rgba(80, 49, 28, 0.35),
+        rgba(30, 19, 12, 0.7)
+    );
+}
+
+.overlay {
+    position: relative;
+    color: white;
+    padding: 45px 50px;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(3px);
+    animation: entradaTitulo 1.3s ease;
+}
+
+.overlay h1 {
+    font-size: clamp(30px, 5vw, 55px);
+    margin-bottom: 15px;
+    text-shadow: 0 4px 15px #00000080;
+}
+
+.overlay p {
+    font-size: 20px;
+    color: #F5E4CC;
+}
+
+.linha-decorativa {
+    width: 100px;
+    height: 3px;
+    background: var(--dourado);
+    margin: 20px auto;
+    border-radius: 20px;
+    animation: crescer 1.5s ease;
+}
+
+/* =========================
+   MENU
+========================= */
+
+nav {
+    background: rgba(232, 215, 190, 0.95);
+    padding: 17px;
+    text-align: center;
+    font-size: 17px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 3px 12px #00000010;
+}
+
+nav a {
+    display: inline-block;
+    margin: 0 18px;
+    color: var(--marrom-escuro);
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: 0.3s;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--marrom);
+    left: 50%;
+    bottom: -6px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #A4774B;
+    transform: translateY(-3px);
+}
+
+nav a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 40px 30px;
+}
+
+section {
+    margin-bottom: 75px;
+    scroll-margin-top: 80px;
+}
+
+h2 {
+    color: var(--marrom);
+    font-size: 30px;
+    margin-bottom: 25px;
+    border-left: 6px solid var(--caramelo);
+    padding-left: 15px;
+}
+
+.titulo-central {
+    text-align: center;
+    border: none;
+    padding: 0;
+    position: relative;
+}
+
+.titulo-central::after {
+    content: "";
+    display: block;
+    width: 90px;
+    height: 4px;
+    background: var(--caramelo);
+    margin: 15px auto 0;
+    border-radius: 20px;
+}
+
+.texto-historia {
+    background: var(--bege-claro);
+    padding: 30px;
+    border-radius: 15px;
+    line-height: 1.9;
+    font-size: 18px;
+    border: 1px solid #E0C9AB;
+    box-shadow: 0 8px 20px #65452C10;
+    transition: 0.4s;
+}
+
+.texto-historia:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px #65452C20;
+}
+
+/* =========================
+   ARTISTAS
+========================= */
+
+.artista {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 35px;
+    background: var(--bege-claro);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 18px #00000010;
+    border: 1px solid #E0C9AB;
+    transition: 0.4s;
+    overflow: hidden;
+}
+
+.artista:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 12px 25px #65452C20;
+    border-color: var(--caramelo);
+}
+
+.artista img {
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 15px;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px #00000020;
+    transition: transform 0.6s;
+}
+
+.artista:hover img {
+    transform: scale(1.05);
+}
+
+.artista h3 {
+    font-size: 25px;
+    color: #765438;
+    margin-bottom: 12px;
+}
+
+.artista p {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* =========================
+   CARACTERÍSTICAS
+========================= */
+
+.caracteristicas-intro {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 35px;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.caracteristicas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.caracteristica-card {
+    background: linear-gradient(
+        145deg,
+        #F9EFDF,
+        #EBD6BA
+    );
+
+    border-radius: 18px;
+    padding: 28px;
+
+    border: 1px solid #D7B995;
+
+    box-shadow: 0 6px 18px #65452C12;
+
+    position: relative;
+    overflow: hidden;
+
+    transition: 0.4s;
+}
+
+.caracteristica-card::before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background: var(--caramelo);
+    top: 0;
+    left: 0;
+    transition: 0.4s;
+}
+
+.caracteristica-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px #65452C25;
+    background: #FFF3E3;
+}
+
+.caracteristica-card:hover::before {
+    width: 9px;
+}
+
+.icone {
+    font-size: 35px;
+    margin-bottom: 12px;
+    display: inline-block;
+    transition: transform 0.4s;
+}
+
+.caracteristica-card:hover .icone {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.caracteristica-card h3 {
+    color: #765438;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.caracteristica-card p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #574436;
+}
+
+.caracteristica-card strong {
+    color: #8B633E;
+}
+
+/* =========================
+   DESTAQUE FINAL
+========================= */
+
+.destaque-final {
+    background: linear-gradient(
+        135deg,
+        #604632,
+        #8D6949
+    );
+    color: #FFF3E3;
+    text-align: center;
+    padding: 35px;
+    border-radius: 20px;
+    margin-top: 50px;
+    box-shadow: 0 10px 25px #60463230;
+    transition: 0.4s;
+}
+
+.destaque-final:hover {
+    transform: scale(1.02);
+}
+
+.destaque-final h3 {
+    font-size: 25px;
+    margin-bottom: 15px;
+    color: #F5D9AE;
+}
+
+.destaque-final p {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
+footer {
+    background: #D9C2A3;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+    font-size: 16px;
+    color: #4A3829;
+}
+
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+.revelar {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.revelar.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes entradaTitulo {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes crescer {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100px;
+    }
+}
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 700px) {
+
+    .hero {
+        min-height: 350px;
+    }
+
+    .overlay {
+        padding: 30px 20px;
+    }
+
+    .overlay p {
+        font-size: 16px;
+    }
+
+    nav {
+        padding: 13px 5px;
+    }
+
+    nav a {
+        margin: 7px 8px;
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 30px 18px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    .artista {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        gap: 18px;
+    }
+
+    .artista img {
+        width: 210px;
+        height: 210px;
+        margin: 0;
+    }
+
+    .artista h3 {
+        font-size: 23px;
+    }
+
+    .artista p {
+        font-size: 16px;
+    }
+
+    .caracteristicas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .texto-historia {
+        padding: 22px;
+        font-size: 16px;
+    }
+
+    .caracteristica-card {
+        padding: 23px;
+    }
+
+    .destaque-final {
+        padding: 25px;
+    }
+}
+
+/* ACESSIBILIDADE */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .revelar {
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- CAPA -->
+
+<header class="hero">
+    <div class="overlay">
+        <h1>MPB – Música Popular Brasileira</h1>
+
+        <div class="linha-decorativa"></div>
+
+        <p>A elegância, poesia e alma da música do Brasil</p>
+    </div>
+</header>
+
+<!-- MENU -->
+
+<nav>
+    <a href="#historia">História</a>
+    <a href="#artistas">Artistas</a>
+    <a href="#caracteristicas">Características</a>
+</nav>
+
+<div class="container">
+
+    <!-- HISTÓRIA -->
+
+    <section id="historia" class="revelar">
+
+        <h2>História da MPB</h2>
+
+        <div class="texto-historia">
+
+            <p>
+                A Música Popular Brasileira nasceu como um movimento
+                artístico repleto de liberdade, poesia e identidade.
+                Misturando ritmos regionais com influências modernas,
+                a MPB se tornou a trilha sonora da alma brasileira,
+                marcando gerações com sua beleza e profundidade cultural.
+            </p>
+
+            <p>
+                Ao longo dos anos, a MPB passou a representar muito
+                mais do que música: tornou-se uma forma de expressar
+                sentimentos, contar histórias, retratar a sociedade
+                e valorizar a diversidade cultural do Brasil.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ARTISTAS -->
+
+    <section id="artistas">
+
+        <h2 class="titulo-central revelar">
+            Artistas que Marcaram a MPB
+        </h2>
+
+        <!-- CAETANO VELOSO -->
+
+        <div class="artista revelar">
+
+            <img src="https://i.uai.com.br/pLAmoad2FxnxPzGyN7y1NrqH4u4=/750x0/imgsapp2.uai.com.br/app/noticia_133890394703/2022/08/07/296080/caetano_1_49140.jpg"
+                 alt="Caetano Veloso">
+
+            <div>
+                <h3>Caetano Veloso</h3>
+
+                <p>
+                    Caetano é a própria reinvenção. Com sua voz suave
+                    e alma inquieta, transformou a música brasileira
+                    em poesia viva — moderna, livre e eternamente
+                    apaixonante. Sua obra marcou a história da música
+                    e ajudou a transformar a cultura brasileira.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- GILBERTO GIL -->
+
+        <div class="artista revelar">
+
+            <img src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2022/06/gilberto_gil-e1656274015264.jpg?w=1200&h=1200&crop=1"
+                 alt="Gilberto Gil">
+
+            <div>
+                <h3>Gilberto Gil</h3>
+
+                <p>
+                    Gil é luz, ritmo e vibração. Seu talento transcende
+                    fronteiras, criando uma música universal que pulsa
+                    com alegria, filosofia e magia. Sua obra mistura
+                    diferentes ritmos e influências, mostrando a riqueza
+                    da cultura brasileira.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ELIS REGINA -->
+
+        <div class="artista revelar">
+
+            <img src="https://s2-g1.glbimg.com/c0s9QIPC3VS8umH7iq-tvZYl038=/0x0:640x458/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/2/M/hcevkpRsyzFsUOGPUKGg/elis80.jpg"
+                 alt="Elis Regina">
+
+            <div>
+                <h3>Elis Regina</h3>
+
+                <p>
+                    Elis cantava como quem abraça a alma do mundo.
+                    Intensa, emocionante e inesquecível, sua voz
+                    permanece viva em cada nota que toca o coração.
+                    Sua interpretação marcante transformou inúmeras
+                    canções em clássicos da música brasileira.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- DJAVAN -->
+
+        <div class="artista revelar">
+
+            <img src="https://s3.amazonaws.com/uploads.piaui.folha.uol.com.br/wp-content/uploads/2016/05/18050557/djavan.jpg"
+                 alt="Djavan">
+
+            <div>
+                <h3>Djavan</h3>
+
+                <p>
+                    Djavan é um dos maiores nomes da MPB, conhecido
+                    por misturar samba, jazz e ritmos africanos em
+                    músicas suaves e sofisticadas. Com sua voz
+                    inconfundível e letras poéticas, cria canções
+                    que emocionam e encantam gerações, como
+                    “Oceano” e “Flor de Lis”. É um verdadeiro ícone
+                    da música brasileira, unindo tradição e inovação.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- CHICO BUARQUE -->
+
+        <div class="artista revelar">
+
+            <img src="https://akamai.sscdn.co/uploadfile/letras/fotos/5/2/c/a/52cacab9aa2710053cd86538314d15ca.jpg"
+                 alt="Chico Buarque">
+
+            <div>
+                <h3>Chico Buarque</h3>
+
+                <p>
+                    Chico é o mestre da palavra. Suas letras contam
+                    histórias que atravessam o tempo, com delicadeza,
+                    inteligência e poesia inigualável. Suas músicas
+                    também abordam questões sociais, sentimentos,
+                    cotidiano e a realidade brasileira.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CARACTERÍSTICAS -->
+
+    <section id="caracteristicas">
+
+        <h2 class="titulo-central revelar">
+            Características da MPB
+        </h2>
+
+        <p class="caracteristicas-intro revelar">
+            A MPB é um gênero musical que representa a diversidade,
+            a criatividade e a riqueza cultural do Brasil.
+            Conheça algumas das principais características
+            que tornam esse estilo tão especial.
+        </p>
+
+        <div class="caracteristicas-grid">
+
+            <!-- BLOCO 1 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Letras poéticas e profundas</h3>
+
+                <p>
+                    As músicas da MPB apresentam letras que falam
+                    sobre <strong>amor, saudade, sonhos, sentimentos,
+                    cotidiano e reflexão</strong>. Muitas canções
+                    utilizam metáforas e poesias para transmitir
+                    mensagens que emocionam e fazem pensar.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 2 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Variedade de ritmos</h3>
+
+                <p>
+                    A MPB mistura diferentes estilos musicais,
+                    como <strong>samba, bossa nova, rock, jazz,
+                    baião e ritmos regionais</strong>. Essa combinação
+                    cria músicas únicas e mostra a diversidade
+                    musical presente no Brasil.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 3 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone">🇧🇷</span>
+
+                <h3>Identidade brasileira</h3>
+
+                <p>
+                    A MPB valoriza a cultura, as tradições,
+                    os costumes e a história do Brasil.
+                    Suas músicas retratam diferentes regiões,
+                    modos de vida e experiências do povo brasileiro,
+                    fortalecendo a <strong>identidade nacional</strong>.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 4 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Expressão de sentimentos</h3>
+
+                <p>
+                    A emoção é uma das marcas mais importantes
+                    da MPB. Os artistas expressam sentimentos
+                    como alegria, tristeza, paixão, esperança
+                    e saudade, criando uma conexão profunda
+                    entre a música e quem a escuta.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 5 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Influências culturais</h3>
+
+                <p>
+                    A MPB recebeu influências de diferentes
+                    culturas, especialmente das tradições
+                    <strong>africanas, indígenas e europeias</strong>.
+                    Essas influências contribuíram para a criação
+                    de ritmos, instrumentos, melodias e estilos
+                    que enriquecem a música brasileira.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 6 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Crítica social e liberdade</h3>
+
+                <p>
+                    Muitas músicas da MPB abordam desigualdade,
+                    política, liberdade, injustiça e problemas
+                    sociais. Por meio da arte, os cantores
+                    expressam opiniões, denunciam situações
+                    e incentivam a reflexão sobre a sociedade.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 7 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Melodias sofisticadas</h3>
+
+                <p>
+                    As composições da MPB apresentam harmonias
+                    elaboradas, instrumentos variados e melodias
+                    marcantes. Violão, piano, guitarra, percussão
+                    e outros instrumentos são utilizados para
+                    criar arranjos ricos e envolventes.
+                </p>
+
+            </div>
+
+            <!-- BLOCO 8 -->
+
+            <div class="caracteristica-card revelar">
+
+                <span class="icone"></span>
+
+                <h3>Inovação e criatividade</h3>
+
+                <p>
+                    A MPB está sempre se transformando.
+                    Novos artistas experimentam diferentes
+                    sonoridades, misturam estilos e criam
+                    novas formas de expressão, mantendo
+                    a música brasileira <strong>viva, moderna
+                    e cheia de criatividade</strong>.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- DESTAQUE FINAL -->
+
+        <div class="destaque-final revelar">
+
+            <h3>A MPB é a voz e a alma do Brasil</h3>
+
+            <p>
+                Mais do que um estilo musical, a Música Popular
+                Brasileira é uma expressão de cultura, história,
+                sentimentos e identidade. Suas canções continuam
+                emocionando gerações e mostrando ao mundo
+                a beleza e a diversidade do nosso país.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- RODAPÉ -->
+
+<footer>
+    <p>Site sobre MPB • Criado com carinho • 2026</p>
+</footer>
+
+<!-- ANIMAÇÕES AO ROLAR A PÁGINA -->
+
+<script>
+
+const elementos = document.querySelectorAll(".revelar");
+
+const observador = new IntersectionObserver((entradas) => {
+
+    entradas.forEach((entrada) => {
+
+        if (entrada.isIntersecting) {
+
+            entrada.target.classList.add("visivel");
+
+            observador.unobserve(entrada.target);
+
+        }
+
+    });
+
+}, {
+    threshold: 0.15
+});
+
+elementos.forEach((elemento) => {
+    observador.observe(elemento);
+});
+
+</script>
+
+</body>
+</html>
